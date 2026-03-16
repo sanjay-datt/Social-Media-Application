@@ -1,0 +1,24 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.rulers": [100],
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  // Treat .jsx files as React JSX
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  // ESLint: run on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  // Hide generated / dependency folders from the Explorer sidebar
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true
+  },
+  // npm scripts are shown in the sidebar
+  "npm.enableRunFromFolder": true
+}

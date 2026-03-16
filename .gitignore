@@ -32,6 +32,7 @@ Thumbs.db
 
 # IDE
 .idea/
-.vscode/
+# Note: .vscode/ is intentionally tracked — it contains shared launch configs,
+# tasks, and recommended extensions for this project.
 *.swp
 *.swo

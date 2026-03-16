@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    // JavaScript / Node
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    // React / Frontend
+    "dsznajder.es7-react-js-snippets",
+    "styled-components.vscode-styled-components",
+    // MongoDB
+    "mongodb.mongodb-vscode",
+    // REST API testing (replaces Postman inside VS Code)
+    "rangav.vscode-thunder-client",
+    // Git
+    "eamodio.gitlens",
+    // Environment files
+    "mikestead.dotenv",
+    // Path intellisense
+    "christian-kohler.path-intellisense"
+  ]
+}

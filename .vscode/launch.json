@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // --- Backend: attach Node.js debugger ---
+    {
+      "name": "Debug Backend",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/backend/node_modules/.bin/nodemon",
+      "runtimeArgs": ["--inspect"],
+      "args": ["server.js"],
+      "cwd": "${workspaceFolder}/backend",
+      "envFile": "${workspaceFolder}/backend/.env",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    },
+    // --- Frontend: open in Chrome (Vite must already be running) ---
+    {
+      "name": "Debug Frontend in Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    },
+    // --- Frontend: open in Edge ---
+    {
+      "name": "Debug Frontend in Edge",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend/src"
+    }
+  ],
+  // Run both servers, then launch the Chrome debugger
+  "compounds": [
+    {
+      "name": "Full Stack (Backend + Frontend)",
+      "configurations": ["Debug Backend", "Debug Frontend in Chrome"],
+      "preLaunchTask": "Start Full Stack",
+      "stopAll": true
+    }
+  ]
+}
