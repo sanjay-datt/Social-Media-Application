@@ -97,7 +97,7 @@ MONGO_URI=mongodb://localhost:27017/socialmedia   # local MongoDB
 JWT_SECRET=replace_this_with_a_long_random_string
 ```
 
-> **MongoDB Atlas (free cloud DB):** create a free cluster at https://www.mongodb.com/atlas, click **Connect → Drivers**, copy the connection string, and paste it as `MONGO_URI`.
+> **Not sure where to get these values?** See [Getting Your Environment Variables](#getting-your-environment-variables) below for step-by-step instructions for both local MongoDB and free MongoDB Atlas, plus how to generate a secure JWT secret.
 
 ### Step 5 — Install dependencies
 
@@ -182,6 +182,83 @@ npm run dev
 ```
 
 The frontend runs on **http://localhost:5173**.
+
+## Getting Your Environment Variables
+
+Before you can start the backend you need two values: a **MongoDB connection string** (`MONGO_URI`) and a **JWT secret** (`JWT_SECRET`). Here is exactly where each one comes from.
+
+---
+
+### MONGO_URI
+
+You have two options — pick whichever suits you:
+
+#### Option A — Local MongoDB (no account needed)
+
+1. Download and install [MongoDB Community Server](https://www.mongodb.com/try/download/community).
+2. Start the MongoDB service:
+   - **Windows:** it starts automatically as a Windows Service after install, or run `net start MongoDB` in an admin terminal.
+   - **macOS (Homebrew):** `brew services start mongodb-community`
+   - **Linux:** `sudo systemctl start mongod`
+3. Use this connection string as-is — no changes needed:
+   ```env
+   MONGO_URI=mongodb://localhost:27017/socialmedia
+   ```
+   MongoDB will create the `socialmedia` database automatically the first time data is written.
+
+#### Option B — MongoDB Atlas (free cloud database, recommended for beginners)
+
+No local install required. The free tier (M0) is permanently free.
+
+1. Go to **https://www.mongodb.com/atlas** and sign up (free).
+2. Click **"Build a Database"** → choose **M0 Free** → pick any cloud region → click **"Create"**.
+3. **Create a database user:**
+   - In the left menu go to **Security → Database Access**.
+   - Click **"Add New Database User"**.
+   - Choose **Password** authentication, enter a username and a strong password, set the role to **"Atlas admin"**, and click **"Add User"**.
+   - ⚠️ Remember this username and password — you will need them in the connection string.
+4. **Allow your IP address:**
+   - Go to **Security → Network Access**.
+   - Click **"Add IP Address"** → click **"Allow Access From Anywhere"** (adds `0.0.0.0/0`) → **Confirm**.
+   - *(For a production app you would restrict this to specific IPs, but for local development "anywhere" is fine.)*
+5. **Copy your connection string:**
+   - Go to **Deployments → Database**.
+   - Click **"Connect"** on your cluster → choose **"Drivers"**.
+   - Select **Driver: Node.js**, copy the connection string. It looks like:
+     ```
+     mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority
+     ```
+6. **Edit the string** — replace `<username>` and `<password>` with the database user credentials from step 3, and add the database name (`socialmedia`) before the `?`:
+   ```env
+   MONGO_URI=mongodb+srv://john:mypassword@cluster0.xxxxx.mongodb.net/socialmedia?retryWrites=true&w=majority
+   ```
+
+---
+
+### JWT_SECRET
+
+This is **not** a password you create on any website. It is simply a long random string that only your server knows. It is used to sign authentication tokens so they can't be forged.
+
+**Generate one now** by running this single command in your terminal:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+
+It will print something like:
+
+```
+a3f8c2e1b47d9f0a6e5c3d2b1a8f7e4c6d5b3a2e1f0c9d8b7a6e5f4d3c2b1a0...
+```
+
+Copy the entire output and paste it as `JWT_SECRET` in your `.env` file.
+
+> **Rules:**
+> - Use at least 32 characters (the command above gives you 128 hex characters — more than enough).
+> - Keep it private — never share it or commit it to Git.
+> - If you change it, all existing login sessions will be invalidated (users will need to log in again).
+
+---
 
 ## Environment Variables
 
