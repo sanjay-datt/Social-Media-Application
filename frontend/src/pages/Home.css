@@ -63,7 +63,9 @@
 
 .feed-empty p { font-size: 0.9rem; margin: 0; }
 
-.home-sidebar {}
+.home-sidebar {
+  /* sidebar wrapper */
+}
 
 .sidebar-card {
   background: #fff;
