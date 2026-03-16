@@ -38,8 +38,121 @@ Social-Media-Application/
 
 - [Node.js](https://nodejs.org/) v18+
 - [MongoDB](https://www.mongodb.com/) (local or Atlas)
+- [VS Code](https://code.visualstudio.com/) *(recommended editor)*
 
-## Setup & Installation
+## Running in VS Code
+
+This is the easiest way to get the project running. The repository ships with a ready-made `.vscode/` folder that handles everything for you.
+
+### Step 1 — Install the prerequisites
+
+| Tool | Download | Notes |
+|------|----------|-------|
+| **Node.js v18+** | https://nodejs.org | Choose the LTS installer |
+| **MongoDB Community** | https://www.mongodb.com/try/download/community | Or use [MongoDB Atlas](https://www.mongodb.com/atlas) (free cloud tier) |
+| **VS Code** | https://code.visualstudio.com | Any recent version works |
+
+### Step 2 — Open the project in VS Code
+
+```
+File → Open Folder → select the Social-Media-Application folder
+```
+
+Or from a terminal:
+
+```bash
+code Social-Media-Application
+```
+
+### Step 3 — Install recommended extensions
+
+VS Code will show a pop-up: **"Do you want to install the recommended extensions?"** — click **Install All**.
+
+If the pop-up doesn't appear, open it manually:
+1. Press `Ctrl+Shift+X` (Extensions panel)
+2. Type `@recommended` in the search box
+3. Install everything listed
+
+Key extensions installed this way:
+- **ESLint** & **Prettier** — code quality / formatting
+- **MongoDB for VS Code** — browse your database inside VS Code
+- **Thunder Client** — test API endpoints without leaving VS Code
+- **ES7+ React Snippets** — React shorthand snippets
+- **DotENV** — syntax highlighting for `.env` files
+
+### Step 4 — Configure the backend environment
+
+```bash
+# In the VS Code integrated terminal (Ctrl+` to open it)
+cd backend
+cp .env.example .env
+```
+
+Then open `backend/.env` and fill in your values:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/socialmedia   # local MongoDB
+# MONGO_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/socialmedia  # Atlas
+JWT_SECRET=replace_this_with_a_long_random_string
+```
+
+> **MongoDB Atlas (free cloud DB):** create a free cluster at https://www.mongodb.com/atlas, click **Connect → Drivers**, copy the connection string, and paste it as `MONGO_URI`.
+
+### Step 5 — Install dependencies
+
+Open two terminals in VS Code (`Ctrl+Shift+\``) or run both commands one after the other:
+
+```bash
+# Terminal 1 — backend
+cd backend && npm install
+
+# Terminal 2 — frontend
+cd frontend && npm install
+```
+
+### Step 6 — Start the app
+
+**Option A — One-click (recommended)**
+
+1. Press `Ctrl+Shift+P` → type **Tasks: Run Task** → select **Start Full Stack**
+
+This starts both the backend (`http://localhost:5000`) and the frontend (`http://localhost:5173`) in parallel inside VS Code's integrated terminal.
+
+**Option B — Separate terminals**
+
+```bash
+# Terminal 1 — backend (auto-restarts on file changes)
+cd backend && npm run dev
+
+# Terminal 2 — frontend (hot-reload)
+cd frontend && npm run dev
+```
+
+### Step 7 — Open the app
+
+Navigate to **http://localhost:5173** in your browser. You should see the SocialApp login screen.
+
+---
+
+### Debugging in VS Code
+
+The `.vscode/launch.json` includes pre-built debug configurations:
+
+| Config | What it does |
+|--------|--------------|
+| **Debug Backend** | Starts `nodemon` with the Node.js debugger attached — set breakpoints in any backend file |
+| **Debug Frontend in Chrome** | Launches Chrome with source maps pointing to your React source files |
+| **Full Stack (Backend + Frontend)** | Starts both servers and opens Chrome in one click |
+
+To use them:
+1. Press `F5` (or go to **Run → Start Debugging**)
+2. Select a configuration from the dropdown at the top of the **Run & Debug** panel (`Ctrl+Shift+D`)
+3. Set breakpoints by clicking in the gutter (left of line numbers) in any `.js` / `.jsx` file
+
+---
+
+## Setup & Installation (command-line)
 
 ### 1. Clone the repository
 
